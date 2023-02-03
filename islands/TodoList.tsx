@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "preact/hooks";
-import { API_KEY } from "../.env.ts";
 
 type Todo = {
   label: string;
@@ -24,7 +23,9 @@ const TodoList = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         fetch(
-          `https://api.opencagedata.com/geocode/v1/json?q=${position.coords.latitude}+${position.coords.longitude}&key=${API_KEY}`,
+          `https://api.opencagedata.com/geocode/v1/json?q=${position.coords.latitude}+${position.coords.longitude}&key=${
+            Deno.env.get("API_KEY")
+          }`,
         )
           .then((res) => res.json())
           .then((data) => {
