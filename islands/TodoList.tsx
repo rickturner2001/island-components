@@ -4,7 +4,7 @@ type Todo = {
   label: string;
 };
 
-const TodoList = () => {
+const TodoList = ({ api_key }: { api_key: string }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const labelRef = useRef<HTMLInputElement>(null);
 
@@ -18,14 +18,11 @@ const TodoList = () => {
   };
 
   const [country, setCountry] = useState();
-
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         fetch(
-          `https://api.opencagedata.com/geocode/v1/json?q=${position.coords.latitude}+${position.coords.longitude}&key=${
-            Deno.env.get("API_KEY")
-          }`,
+          `https://api.opencagedata.com/geocode/v1/json?q=${position.coords.latitude}+${position.coords.longitude}&key=${api_key}`,
         )
           .then((res) => res.json())
           .then((data) => {

@@ -1,7 +1,21 @@
+import { Handlers, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import TodoList from "../islands/TodoList.tsx";
+import { config } from "https://deno.land/x/dotenv/mod.ts";
 
-export default function Home() {
+const env = config();
+
+interface AppProps {
+  API_KEY: string;
+}
+
+export const handler: Handlers<AppProps> = {
+  GET(_, ctx) {
+    return ctx.render({ API_KEY: env.API_KEY });
+  },
+};
+
+export default function Home(props: PageProps<AppProps>) {
   return (
     <>
       <Head>
@@ -30,8 +44,7 @@ export default function Home() {
         <h2 class="text-white font-black text-5xl text-center max-w-2xl mb-4">
           Task Island Component
         </h2>
-
-        <TodoList />
+        <TodoList api_key={props.data.API_KEY} />
       </section>
     </>
   );
