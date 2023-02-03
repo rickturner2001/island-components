@@ -19,6 +19,9 @@ const TodoList = ({ api_key }: { api_key: string }) => {
 
   const [country, setCountry] = useState();
   useEffect(() => {
+    if (document !== undefined) {
+      document.documentElement.style.scrollBehavior = "smooth";
+    }
     navigator.geolocation.getCurrentPosition(
       (position) => {
         fetch(
