@@ -1,9 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import TodoList from "../islands/TodoList.tsx";
-import { config } from "https://deno.land/x/dotenv/mod.ts";
-
-const env = config();
 
 interface AppProps {
   API_KEY: string;
@@ -11,7 +8,7 @@ interface AppProps {
 
 export const handler: Handlers<AppProps> = {
   GET(_, ctx) {
-    return ctx.render({ API_KEY: env.API_KEY });
+    return ctx.render({ API_KEY: Deno.env.get("API_KEY") as string });
   },
 };
 
